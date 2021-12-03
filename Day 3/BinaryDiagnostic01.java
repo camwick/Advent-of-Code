@@ -33,9 +33,9 @@ public class BinaryDiagnostic01 {
         for (int i = 0; i < gamma.length(); ++i)
             epsilon += gamma.charAt(i) == '1' ? "0" : "1";
 
-        System.out.println(gamma);
-        System.out.println(epsilon);
-        System.out.println(Integer.parseInt(gamma, 2) * Integer.parseInt(epsilon, 2));
+        System.out.println("Gamma: " + gamma);
+        System.out.println("Epsilon: " + epsilon);
+        System.out.println("Power Consumption: " + Integer.parseInt(gamma, 2) * Integer.parseInt(epsilon, 2));
 
         input.close();
     }
