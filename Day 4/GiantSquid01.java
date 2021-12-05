@@ -84,27 +84,6 @@ public class GiantSquid01 {
                 }
             }
 
-            // // check diagonals
-            // int counter = 0;
-            // for (int i = 0; i < 5; ++i) {
-            // if (this.board[i][i].isHit())
-            // counter++;
-            // }
-            // if (counter == 5) {
-            // this.win = true;
-            // return true;
-            // }
-
-            // counter = 0;
-            // for (int i = 4; i >= 0; --i) {
-            // if (this.board[i][i].isHit())
-            // counter++;
-            // }
-            // if (counter == 5) {
-            // this.win = true;
-            // return true;
-            // }
-
             return false;
         }
 
