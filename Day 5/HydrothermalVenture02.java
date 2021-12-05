@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class HydrothermalVenture01 {
+public class HydrothermalVenture02 {
   public static class Line {
     final int x1;
     final int x2;
@@ -119,7 +119,7 @@ public class HydrothermalVenture01 {
 
       String[] lineParts = line.trim().split(",| -> ");
 
-      lines.add(new HydrothermalVenture01.Line(Integer.valueOf(lineParts[0]), Integer.valueOf(lineParts[2]),
+      lines.add(new HydrothermalVenture02.Line(Integer.valueOf(lineParts[0]), Integer.valueOf(lineParts[2]),
           Integer.valueOf(lineParts[1]), Integer.valueOf(lineParts[3])));
     }
 
