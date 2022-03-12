@@ -15,6 +15,21 @@ public class Main {
         return surfaceArea;
     }
 
+    private static int volume(int[] dimensions) {
+        return dimensions[0] * dimensions[1] * dimensions[2];
+    }
+
+    private static int minPerimeter(int[] dimensions) {
+        int perimeter = 2 * dimensions[0] + 2 * dimensions[1];
+
+        if (perimeter >= 2 * dimensions[0] + 2 * dimensions[2])
+            perimeter = 2 * dimensions[0] + 2 * dimensions[2];
+        if (perimeter >= 2 * dimensions[1] + 2 * dimensions[2])
+            perimeter = 2 * dimensions[1] + 2 * dimensions[2];
+
+        return perimeter;
+    }
+
     private static int minArea(int[] area) {
         int min = area[0];
 
@@ -31,6 +46,7 @@ public class Main {
             Scanner scan = new Scanner(file);
 
             int ans1 = 0;
+            int ans2 = 0;
             String[] parts = new String[3];
             while (scan.hasNextLine()) {
                 parts = scan.nextLine().split("x");
@@ -43,9 +59,13 @@ public class Main {
                 int[] area = new int[3];
                 ans1 += surfaceArea(dimensions, area);
                 ans1 += minArea(area);
+
+                ans2 += minPerimeter(dimensions);
+                ans2 += volume(dimensions);
             }
 
-            System.out.println(ans1);
+            System.out.println(ans1 + " square feet of wrapping paper");
+            System.out.println(ans2 + " feet of ribbon");
 
             scan.close();
         } catch (FileNotFoundException e) {
