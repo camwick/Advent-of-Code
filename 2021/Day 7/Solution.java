@@ -10,6 +10,17 @@ public class Solution {
         return num * num;
     }
 
+    private static int maxInList(List<Integer> positions) {
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < positions.size(); ++i) {
+            if (max < positions.get(i))
+                max = positions.get(i);
+        }
+
+        return max;
+    }
+
     private static int findFuelCost(List<Integer> positions, int target) {
         int sum = 0;
 
@@ -17,6 +28,19 @@ public class Solution {
             sum += Math.sqrt(square(positions.get(i) - positions.get(target)));
         }
 
+        return sum;
+    }
+
+    private static int findIncFuelCost(List<Integer> positions, int target) {
+        int sum = 0;
+
+        for (int i = 0; i < positions.size(); ++i) {
+            int difference = 0;
+            difference += Math.sqrt(square(positions.get(i) - target));
+
+            int fuelCost = (square(difference) + difference) / 2;
+            sum += fuelCost;
+        }
         return sum;
     }
 
@@ -56,11 +80,19 @@ public class Solution {
         System.out.println("Fuel spent: " + minFuel);
         System.out.println("Elapsed time: " + elapsed + "ms\n");
 
-        // part 2
+        // PART 2
         start = System.currentTimeMillis();
 
+        minFuel = Integer.MAX_VALUE;
+        int listMax = maxInList(positions);
+        for (int i = 0; i < listMax; ++i) {
+            int fuel = findIncFuelCost(positions, i);
+            if (fuel < minFuel)
+                minFuel = fuel;
+        }
+
         elapsed = System.currentTimeMillis() - start;
-        System.out.println("Fuelt spent: ");
+        System.out.println("Fuel spent: " + minFuel);
         System.out.println("Elapsed time: " + elapsed + "ms");
     }
 }
