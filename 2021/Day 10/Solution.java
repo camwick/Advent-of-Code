@@ -9,6 +9,7 @@ public class Solution {
     public static void main(String[] args) throws FileNotFoundException {
         File file;
         Scanner input;
+        long start, elapsed;
 
         if (args.length > 0)
             file = new File(args[0]);
@@ -25,105 +26,109 @@ public class Solution {
         input.close();
 
         // PART 1
-        long start = System.currentTimeMillis();
+        {
+            start = System.currentTimeMillis();
 
-        Stack<Character> navChars;
-        List<Character> errors = new ArrayList<>();
-        boolean error = false;
+            Stack<Character> navChars;
+            List<Character> errors = new ArrayList<>();
+            boolean error = false;
 
-        for (String line : lines) {
-            navChars = new Stack<>();
-            navChars.push(line.charAt(0));
+            for (String line : lines) {
+                navChars = new Stack<>();
+                navChars.push(line.charAt(0));
 
-            for (int i = 1; i < line.length(); ++i) {
-                char x = line.charAt(i);
+                for (int i = 1; i < line.length(); ++i) {
+                    char x = line.charAt(i);
 
-                if (navChars.empty()) {
-                    navChars.push(x);
-                    continue;
-                }
+                    if (navChars.empty()) {
+                        navChars.push(x);
+                        continue;
+                    }
 
-                switch (navChars.peek()) {
-                    case '(':
-                        if (x == ']' || x == '}' || x == '>') {
-                            errors.add(x);
-                            error = true;
+                    switch (navChars.peek()) {
+                        case '(':
+                            if (x == ']' || x == '}' || x == '>') {
+                                errors.add(x);
+                                error = true;
+                                break;
+                            } else if (x == ')')
+                                navChars.pop();
+                            else
+                                navChars.push(x);
                             break;
-                        } else if (x == ')')
-                            navChars.pop();
-                        else
-                            navChars.push(x);
-                        break;
 
-                    case '[':
-                        if (x == ')' || x == '}' || x == '>') {
-                            errors.add(x);
-                            error = true;
+                        case '[':
+                            if (x == ')' || x == '}' || x == '>') {
+                                errors.add(x);
+                                error = true;
+                                break;
+                            } else if (x == ']')
+                                navChars.pop();
+                            else
+                                navChars.push(x);
                             break;
-                        } else if (x == ']')
-                            navChars.pop();
-                        else
-                            navChars.push(x);
-                        break;
 
-                    case '{':
-                        if (x == ')' || x == ']' || x == '>') {
-                            errors.add(x);
-                            error = true;
+                        case '{':
+                            if (x == ')' || x == ']' || x == '>') {
+                                errors.add(x);
+                                error = true;
+                                break;
+                            } else if (x == '}')
+                                navChars.pop();
+                            else
+                                navChars.push(x);
                             break;
-                        } else if (x == '}')
-                            navChars.pop();
-                        else
-                            navChars.push(x);
-                        break;
 
-                    case '<':
-                        if (x == ')' || x == '}' || x == ']') {
-                            errors.add(x);
-                            error = true;
+                        case '<':
+                            if (x == ')' || x == '}' || x == ']') {
+                                errors.add(x);
+                                error = true;
+                                break;
+                            } else if (x == '>')
+                                navChars.pop();
+                            else
+                                navChars.push(x);
                             break;
-                        } else if (x == '>')
-                            navChars.pop();
-                        else
-                            navChars.push(x);
-                        break;
-                }
+                    }
 
-                // move to next line if error occured
-                if (error) {
-                    error = false;
-                    break;
+                    // move to next line if error occured
+                    if (error) {
+                        error = false;
+                        break;
+                    }
                 }
             }
-        }
 
-        int points = 0;
-        for (char x : errors) {
-            switch (x) {
-                case ')':
-                    points += 3;
-                    break;
-                case ']':
-                    points += 57;
-                    break;
-                case '}':
-                    points += 1197;
-                    break;
-                case '>':
-                    points += 25137;
-                    break;
+            int points = 0;
+            for (char x : errors) {
+                switch (x) {
+                    case ')':
+                        points += 3;
+                        break;
+                    case ']':
+                        points += 57;
+                        break;
+                    case '}':
+                        points += 1197;
+                        break;
+                    case '>':
+                        points += 25137;
+                        break;
+                }
             }
-        }
 
-        long elapsed = System.currentTimeMillis() - start;
-        System.out.println("\nSyntax Error Score: " + points);
-        System.out.println("Elapsed time: " + elapsed + "ms\n");
+            elapsed = System.currentTimeMillis() - start;
+            System.out.println("\nSyntax Error Score: " + points);
+            System.out.println("Elapsed time: " + elapsed + "ms\n");
+        }
 
         // PART 2
-        start = System.currentTimeMillis();
+        {
+            start = System.currentTimeMillis();
 
-        elapsed = System.currentTimeMillis() - start;
-        System.out.println("PART 2 ANS: ");
-        System.out.print("Elapsed time: " + elapsed + "ms");
+            elapsed = System.currentTimeMillis() - start;
+            System.out.println("PART 2 ANS: ");
+            System.out.print("Elapsed time: " + elapsed + "ms");
+        }
     }
 }
