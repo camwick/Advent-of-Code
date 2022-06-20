@@ -36,4 +36,8 @@ public class HeightMap {
     public void setCorner(boolean x) {
         this.corner = x;
     }
+
+    public void setVisited(boolean x) {
+        this.visited = x;
+    }
 }

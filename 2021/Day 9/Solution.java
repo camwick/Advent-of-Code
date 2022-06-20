@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -93,7 +94,7 @@ public class Solution {
             riskLevelSum += x;
 
         long elapsed = System.currentTimeMillis() - start;
-        System.out.println("Sum of risk levels: " + riskLevelSum);
+        System.out.println("\nSum of risk levels: " + riskLevelSum);
         System.out.println("Elapsed time: " + elapsed + "ms\n");
 
         // PART 2
@@ -123,15 +124,31 @@ public class Solution {
             }
         }
 
+        // calculating quotient of largest 3 basins
+        Collections.sort(basinSize);
+
+        int quotient = basinSize.get(basinSize.size() - 1) * basinSize.get(basinSize.size() - 2)
+                * basinSize.get(basinSize.size() - 3);
+
         elapsed = System.currentTimeMillis() - start;
-        System.out.println("PART 2 ANS: ");
+        System.out.println("Quotent: " + quotient);
         System.out.println("Elapsed time: " + elapsed + "ms");
     }
 
     private static int calculateBasinSize(HeightMap current) {
         int counter = 0;
 
-        // TO DO THIS NEXT
+        current.setVisited(true);
+        counter++;
+
+        HeightMap[] neighbors = current.getNeighbors();
+        for (int i = 0; i < neighbors.length; ++i) {
+            if (neighbors[i] == null)
+                continue;
+            else if (!neighbors[i].getVisited()) {
+                counter += calculateBasinSize(neighbors[i]);
+            }
+        }
 
         return counter;
     }
