@@ -99,8 +99,85 @@ public class Solution {
         // PART 2
         start = System.currentTimeMillis();
 
+        // creating heightmap object;
+        HeightMap[][] map = new HeightMap[heightmap.length][heightmap[0].length];
+        for (int y = 0; y < heightmap.length; ++y) {
+            for (int x = 0; x < heightmap[y].length; ++x) {
+                map[y][x] = new HeightMap(heightmap[y][x]);
+
+                if ((x == 0 && y == 0) ||
+                        (x == map[y].length - 1 && y == 0) ||
+                        (x == 0 && y == map.length - 1)
+                        || (x == map[y].length - 1 && y == map.length - 1))
+                    map[y][x].setCorner(true);
+            }
+        }
+        settingNeighbors(map);
+
+        // finding all basin sizes
+        List<Integer> basinSize = new ArrayList<>();
+        for (int y = 0; y < map.length; ++y) {
+            for (int x = 0; x < map[y].length; ++x) {
+                if (!map[y][x].getVisited())
+                    basinSize.add(calculateBasinSize(map[y][x]));
+            }
+        }
+
         elapsed = System.currentTimeMillis() - start;
         System.out.println("PART 2 ANS: ");
         System.out.println("Elapsed time: " + elapsed + "ms");
+    }
+
+    private static int calculateBasinSize(HeightMap current) {
+        int counter = 0;
+
+        // TO DO THIS NEXT
+
+        return counter;
+    }
+
+    private static void settingNeighbors(HeightMap[][] map) {
+        for (int y = 0; y < map.length; ++y) {
+            for (int x = 0; x < map[y].length; ++x) {
+                // corners
+                if (map[y][x].getCorner()) {
+                    if (y == 0) {
+                        if (x == 0)
+                            map[y][x].setNeighbors(new HeightMap[] { null, null, map[y][x + 1], map[y + 1][x] });
+                        else
+                            map[y][x].setNeighbors(new HeightMap[] { null, map[y][x - 1], null, map[y + 1][x] });
+                    } else {
+                        if (x == 0)
+                            map[y][x].setNeighbors(new HeightMap[] { null, map[y - 1][x], map[y][x + 1], null });
+                        else
+                            map[y][x].setNeighbors(new HeightMap[] { map[y - 1][x], map[y][x - 1], null, null });
+                    }
+                }
+                // top row
+                else if (y == 0) {
+                    if (x == 0 || x == map[y].length - 1)
+                        continue;
+                    else
+                        map[y][x].setNeighbors(new HeightMap[] { null, map[y][x - 1], map[y][x + 1], map[y + 1][x] });
+                }
+                // bottom row
+                else if (y == map.length - 1) {
+                    if (x == 0 || x == map[y].length - 1)
+                        continue;
+                    else
+                        map[y][x].setNeighbors(new HeightMap[] { map[y - 1][x], map[y][x - 1], map[y][x + 1], null });
+                }
+                // everything else
+                else {
+                    if (x == 0)
+                        map[y][x].setNeighbors(new HeightMap[] { map[y - 1][x], null, map[y][x + 1], map[y + 1][x] });
+                    else if (x == map[y].length - 1)
+                        map[y][x].setNeighbors(new HeightMap[] { map[y - 1][x], map[y][x - 1], null, map[y + 1][x] });
+                    else
+                        map[y][x].setNeighbors(
+                                new HeightMap[] { map[y - 1][x], map[y][x - 1], map[y][x + 1], map[y + 1][x] });
+                }
+            }
+        }
     }
 }
